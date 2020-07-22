@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<div id="container">
+  <h1>&bull; Goliath National Bank &bull;</h1>
+  <h2>&bull; Are you worthy? &bull;</h2>
+  <div class="underline">
+  </div>
+  <form action="/predict" method="post" id="contact_form">
+    <div class="telephone">
+      <label for="name"></label>
+      <input type="text" placeholder="Name" name="name" id="name_input" required>
+    </div>
+    <div class="name">
+      <label for="subject"></label>
+      <select name="gender" id="subject_input" required>
+        <option selected="selected">Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+    </div>
+    <div class="age">
+      <label for="age"></label>
+      <input type="age" placeholder="Age" name="age" id="age_input" required>
+    </div>
+
+
+    <div class="telephone">
+      <label for="creditscore"></label>
+      <input type="text" placeholder="Credit Score" name="creditscore" id="creditscore" required>
+    </div>
+    <div class="name">
+      <label for="balance"></label>
+      <input type="text" placeholder="Account Balance" name="balance" id="balance" required>
+    </div>
+    <div class="age">
+      <label for="salary"></label>
+      <input type="age" placeholder="Salary" name="age" id="salary" required>
+    </div>
+
+
+    <div class="telephone">
+      <label for="tenure"></label>
+      <input type="text" placeholder="Tenure" name="tenure" id="tenure" required>
+    </div>
+    <div class="name">
+      <label for="creditcard"></label>
+      <select name="creditcard" id="creditcard" required>
+        <option selected="selected">Do you have a credit card</option>
+        <option>Yes</option>
+        <option>No</option>
+      </select>
+    </div>
+    <div class="age">
+      <label for="products"></label>
+      <select name="products" id="products" required>
+        <option selected="selected">Number of GNB products</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </div>
+
+    <div class="submit">
+      <input type="submit" value="Submit" id="form_button" />
+    </div>
+
+
+
+    <script>
+      let gnb = [];
+      // example {id:1592304983049, title: 'Deadpool', year: 2015}
+      const addCustomer = (ev) => {
+        ev.preventDefault();  //to stop the form submitting
+        let customer = {
+          id: Date.now(),
+          name: document.getElementById('name').value,
+          age: document.getElementById('age').value,
+          gender: document.getElementById('gender').value,
+          tenure: document.getElementById('tenure').value,
+          creditscore: document.getElementById('creditscore').value,
+          product: document.getElementById('product').value,
+          balance: document.getElementById('balance').value,
+          creditcard: document.getElementById('creditcard').value,
+          salary: document.getElementById('salary').value
+        }
+        gnb.push(customer);
+        document.forms[0].reset(); // to clear the form for the next entries
+        //document.querySelector('form').reset();
+
+        //for display purposes only
+        console.warn('added', { gnb });
+        let pre = document.querySelector('#msg pre');
+        pre.textContent = '\n' + JSON.stringify(gnb, '\t', 2);
+
+        //saving to localStorage
+        localStorage.setItem('gnbCustomers', JSON.stringify(gnb));
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('submit').addEventListener('click', addCustomer);
+      });
+    </script>
+  </form><!-- // End form -->
+  
+</div><!-- // End #container -->
+<h2> &bull; {{prediction_text}} &bull;</h2>
+</html>
